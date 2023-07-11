@@ -1,6 +1,21 @@
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
+
 # Проект Mesto фронтенд + бэкенд
 
+[Ссылка на репозиторий](https://stanislav920.github.io/express-mesto-gha/)
+
+#### Использование технологий при создание проекта
+
+* NODE JS
+* EXPRESS JS
+* MONGODB
+
+#### Дополнительно использовал
+
+* ESLint (Airbnb)
+* Nodemon
+* EditorConfig
+* Компоненты для защиты сервера
 
 ## Директории
 

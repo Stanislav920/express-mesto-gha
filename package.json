@@ -1,11 +1,16 @@
 {
   "name": "mesto-gha",
+  "homepage": " https://stanislav920.github.io/express-mesto-gha/",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint .",
     "start": "node app.js",
     "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://stanislav920.github.io/express-mesto-gha/"
   },
   "author": "Stanislav920",
   "license": "ISC",
