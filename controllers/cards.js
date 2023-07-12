@@ -1,77 +1,80 @@
+const mongoose = require('mongoose');
+
+const { ValidationError, CastError } = mongoose.Error;
+
 const Card = require('../models/card');
+
+// Константы ошибок.
+
+const createError = 201;
+const BadRequestsError = 400;
+const internalServerError = 500;
+
+// Создание карточки.
 
 module.exports.createCard = (req, res) => {
   const { name, link } = req.body;
   const { _id } = req.user;
+
   Card.create({ name, link, owner: _id })
-    .then((card) => res.status(201).send(card))
+    .then((card) => res.status(createError).send(card))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'переданы некорректные данные карточки' });
+      if (err.name instanceof ValidationError) {
+        return res.status(BadRequestsError).send({ message: 'переданы некорректные данные карточки' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка на сервере' });
+      return res.status(internalServerError).send({ message: 'Произошла ошибка на сервере' });
     });
 };
+
+// Добавление карточки.
 
 module.exports.getCards = (req, res) => {
   Card.find({}).populate(['owner', 'likes'])
-    .then((card) => {
-      if (!card) {
-        return res.status(404).send({ message: 'карточка не найдена.' });
-      }
-      return res.send(card);
-    })
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .then((card) => res.send(card))
+    .catch(() => res.status(internalServerError).send({ message: 'Произошла ошибка' }));
 };
+
+// Удаление карточки.
 
 module.exports.deleteCardById = (req, res) => {
   Card.findById(req.params.cardId)
-    .then((card) => {
-      if (!card) {
-        return res.status(404).send({ message: 'карточка не найдена.' });
-      }
-      return card.deleteOne().then(() => res.send({ message: 'Карточка удалена' }));
-    })
+    .then((card) => card.deleteOne().then(() => res.send({ message: 'Карточка удалена' })))
     .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'переданы некорректные данные карточки' });
+      if (err.name instanceof CastError) {
+        return res.status(BadRequestsError).send({ message: 'переданы некорректные данные карточки' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка на сервере' });
+      return res.status(internalServerError).send({ message: 'Произошла ошибка на сервере' });
     });
 };
+
+// Поставить лайк карточки.
 
 module.exports.likeCard = (req, res) => {
   const { cardId } = req.params;
   const { _id } = req.user;
+
   Card.findByIdAndUpdate(cardId, { $addToSet: { likes: _id } }, { new: true })
-    .then((card) => {
-      if (!card) {
-        return res.status(404).send({ message: 'карточка не найдена.' });
-      }
-      return res.send(card);
-    })
+    .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'переданы некорректные данные карточки' });
+      if (err.name instanceof CastError) {
+        return res.status(BadRequestsError).send({ message: 'переданы некорректные данные карточки' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка на сервере' });
+      return res.status(internalServerError).send({ message: 'Произошла ошибка на сервере' });
     });
 };
+
+// Удалить лайк карточки.
 
 module.exports.dislikeCard = (req, res) => {
   const { cardId } = req.params;
   const { _id } = req.user;
+
   Card.findByIdAndUpdate(cardId, { $pull: { likes: _id } }, { new: true })
-    .then((card) => {
-      if (!card) {
-        return res.status(404).send({ message: 'карточка не найдена.' });
-      }
-      return res.send(card);
-    })
+    .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'переданы некорректные данные карточки' });
+      if (err.name instanceof CastError) {
+        return res.status(BadRequestsError).send({ message: 'переданы некорректные данные карточки' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка на сервере' });
+      return res.status(internalServerError).send({ message: 'Произошла ошибка на сервере' });
     });
 };

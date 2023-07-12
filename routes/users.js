@@ -12,7 +12,4 @@ userRouter.post('/', createUser);
 userRouter.patch('/me', updateProfile);
 userRouter.patch('/me/avatar', updateAvatar);
 
-userRouter.use('*', (req, res) => {
-  res.status(404).send({ message: 'Страница не найдена' });
-});
 module.exports = userRouter;

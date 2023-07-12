@@ -2,7 +2,7 @@
   "name": "mesto-gha",
   "homepage": " https://stanislav920.github.io/express-mesto-gha/",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "lint": "npx eslint .",
     "start": "node app.js",
@@ -21,7 +21,6 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "mongoose": "^7.2.2"
   }
