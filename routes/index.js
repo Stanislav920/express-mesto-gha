@@ -4,10 +4,6 @@ const cardRouter = require('./cards');
 
 const NotFoundError = 404;
 
-userRouter.use('*', (req, res) => {
-  res.status(NotFoundError).send({ message: 'Страница не найдена' });
-});
-
 const router = express.Router();
 router.use('/users', userRouter);
 router.use('/cards', cardRouter);
