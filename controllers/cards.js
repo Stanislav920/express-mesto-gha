@@ -46,7 +46,7 @@ module.exports.deleteCardById = (req, res, next) => {
         return next(new ForbiddenError('Вы не являетесь автором карточки, удаление невозможно'));
       }
 
-      return Card.findDyIdDelete(req.params.cardId)
+      return Card.deleteOne(req.params.cardId)
         .orrFail(() => new NotFoundError('Карточка по указанному _id не найдена'))
         .then(() => res.send({ message: 'Карточка удалена' }));
     })

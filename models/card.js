@@ -1,20 +1,22 @@
 // models/user.js
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
     minLength: 2,
     maxLength: 30,
   },
   link: {
     type: String,
-    required: true,
+    validate: {
+      validator: (correct) => validator.isUrl(correct),
+      message: 'Ошибка при передачи изображения',
+    }
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: 'user',
   },
   likes: [

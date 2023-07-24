@@ -14,6 +14,7 @@ const createError = 201;
 const BadRequestsError = require('../utils/repsone-errors/BadRequestError');
 const UnauthorizedError = require('../utils/repsone-errors/UnauthorizedError');
 const ConflictingRequestError = require('../utils/repsone-errors/ConflictingRequestError');
+const NotFoundError = require('../utils/repsone-errors/NotFoundError');
 
 // Создание пользователя.
 
@@ -115,7 +116,7 @@ module.exports.getUserProfile = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        return next(new UnauthorizedError('Пользователь по указанному _id не найден'));
+        return next(new NotFoundError('Пользователь по указанному _id не найден'));
       }
       return res.send({ data: user });
     })
